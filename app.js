@@ -11,19 +11,11 @@ GAME RULES:
 
 let scores, roundSroce, activePlayer;
 
-scores = [0,0];
-roundSroce = 0;
-activePlayer = 0;
+init();
 
 
 //document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>'
 
-document.querySelector('.dice').style.display = 'none';
-
-document.getElementById('score-0').textContent = '0';
-document.getElementById('score-1').textContent = '0';
-document.getElementById('current-0').textContent = '0';
-document.getElementById('current-1').textContent = '0';
 
 
 
@@ -59,7 +51,7 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
 	document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
 	//check if player won the game
-	if (scores[activePlayer] >= 5) {
+	if (scores[activePlayer] >= 100) {
 		document.querySelector('#name-' + activePlayer).textContent = 'WINNER!';
 		document.querySelector('.dice').style.display = 'none';
 		document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
@@ -73,6 +65,33 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
 	
 });
 
+document.querySelector('.btn-new').addEventListener('click', init);
+ 
+function init() {
+	scores = [0,0];
+	activePlayer = 0;
+	roundSroce = 0;
+
+	document.querySelector('.dice').style.display = 'none';
+
+	document.getElementById('score-0').textContent = '0';
+	document.getElementById('score-1').textContent = '0';
+	document.getElementById('current-0').textContent = '0';
+	document.getElementById('current-1').textContent = '0';
+	document.getElementById('name-0').textContent = 'Player 1';
+	document.getElementById('name-1').textContent = 'Player 2';
+	document.querySelector('.player-0-panel').classList.remove('winner');
+	document.querySelector('.player-1-panel').classList.remove('winner');
+	document.querySelector('.player-0-panel').classList.remove('active');
+	document.querySelector('.player-1-panel').classList.remove('active');
+	document.querySelector('.player-0-panel').classList.add('active');
+
+
+
+
+
+
+}
 
 function nextPlayer(){
 		//ternary operator(condition ? expr1 : expr2)
