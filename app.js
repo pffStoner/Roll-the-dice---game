@@ -9,7 +9,7 @@ GAME RULES:
 
 */
 
-let scores, roundSroce, activePlayer;
+let scores, roundSroce, activePlayer, gamePlaying;
 
 init();
 
@@ -21,8 +21,8 @@ init();
 
 
 document.querySelector('.btn-roll').addEventListener('click', function () {
-	
-	//random number
+	if (gamePlaying) {
+		//random number
 	var dice = Math.floor(Math.random() * 6 ) + 1;
 
 
@@ -38,28 +38,31 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
 	}else{
 		//next player
 		 nextPlayer();
+		}
 	}
-
-} );
+});
 
 
 document.querySelector('.btn-hold').addEventListener('click', function(){
-	//add current score to global score
+	if (gamePlaying) {
+		//add current score to global score
 	scores[activePlayer] += roundSroce;
 
 	//update UI
 	document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
 	//check if player won the game
-	if (scores[activePlayer] >= 100) {
+	if (scores[activePlayer] >= 6) {
 		document.querySelector('#name-' + activePlayer).textContent = 'WINNER!';
 		document.querySelector('.dice').style.display = 'none';
 		document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
 		document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+		gamePlaying = false;
 
 	}else{
 		//next player
 	 	nextPlayer();
+	}
 	}
 
 	
@@ -68,6 +71,7 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
 document.querySelector('.btn-new').addEventListener('click', init);
  
 function init() {
+	gamePlaying = true;
 	scores = [0,0];
 	activePlayer = 0;
 	roundSroce = 0;
