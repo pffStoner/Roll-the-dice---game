@@ -45,6 +45,36 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
 		document.querySelector('#current-' + activePlayer).textContent = roundSroce;
 	}else{
 		//next player
+		 nextPlayer();
+	}
+
+} );
+
+
+document.querySelector('.btn-hold').addEventListener('click', function(){
+	//add current score to global score
+	scores[activePlayer] += roundSroce;
+
+	//update UI
+	document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+
+	//check if player won the game
+	if (scores[activePlayer] >= 5) {
+		document.querySelector('#name-' + activePlayer).textContent = 'WINNER!';
+		document.querySelector('.dice').style.display = 'none';
+		document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+		document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+
+	}else{
+		//next player
+	 	nextPlayer();
+	}
+
+	
+});
+
+
+function nextPlayer(){
 		//ternary operator(condition ? expr1 : expr2)
 		activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
 		roundSroce = 0;
@@ -59,13 +89,4 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
 		//document.querySelector('.player-0-panel').classList.remove('active');
 		//document.querySelector('.player-1-panel').classList.add('active');
 		document.querySelector('.dice').style.display = 'none';
-
-
-
-	}
-
-
-
-
-
-} );
+}
