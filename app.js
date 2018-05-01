@@ -9,38 +9,55 @@ GAME RULES:
 
 */
 
-let scores, roundSroce, activePlayer, gamePlaying;
+let scores, roundSroce, activePlayer, gamePlaying, prevRoll;
 
 init();
 
-
 //document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>'
-
-
-
-
 
 document.querySelector('.btn-roll').addEventListener('click', function () {
 	if (gamePlaying) {
 		//random number
 	var dice = Math.floor(Math.random() * 6 ) + 1;
+	var dice2 = Math.floor(Math.random() * 6 ) + 1;
 
 
 	//display the result
 	var diceDOM = document.querySelector('.dice');
 	diceDOM.style.display = 'block';
-	diceDOM.src = 'dice-' + dice + '.png'; 
+	diceDOM.src = 'dice-' + dice + '.png';
+
+		//display the result
+	var diceDOM = document.querySelector('.dice-2');
+	diceDOM.style.display = 'block';
+	diceDOM.src = 'dice-' + dice2 + '.png'; 
 
 	//update round score if the rolled number was NOT 1
-	if (dice !== 1) {
-		roundSroce += dice;
+	if((dice === 6 || dice2 === 6 ) && prevRoll === 6){
+		scores[activePlayer] = 0;
+		document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+		nextPlayer();
+	}else if(dice === 6 && dice2 === 6){
+		//alert('fak2');
+	}else if (dice !== 1) {
+		roundSroce += (dice+dice2);
 		document.querySelector('#current-' + activePlayer).textContent = roundSroce;
 	}else{
 		//next player
 		 nextPlayer();
 		}
+		if (dice === 6 || dice2 === 6) {
+			prevRoll = 6;
+			console.log(prevRoll);
+		}else{
+			prevRoll = 0;
+			console.log(prevRoll);
+
+		}
 	}
-});
+
+	
+});//end button roll
 
 
 document.querySelector('.btn-hold').addEventListener('click', function(){
@@ -66,10 +83,11 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
 	}
 
 	
-});
+});//end button hold
 
 document.querySelector('.btn-new').addEventListener('click', init);
  
+
 function init() {
 	gamePlaying = true;
 	scores = [0,0];
@@ -77,6 +95,7 @@ function init() {
 	roundSroce = 0;
 
 	document.querySelector('.dice').style.display = 'none';
+	document.querySelector('.dice-2').style.display = 'none';
 
 	document.getElementById('score-0').textContent = '0';
 	document.getElementById('score-1').textContent = '0';
@@ -89,13 +108,7 @@ function init() {
 	document.querySelector('.player-0-panel').classList.remove('active');
 	document.querySelector('.player-1-panel').classList.remove('active');
 	document.querySelector('.player-0-panel').classList.add('active');
-
-
-
-
-
-
-}
+}//end init
 
 function nextPlayer(){
 		//ternary operator(condition ? expr1 : expr2)
@@ -112,4 +125,6 @@ function nextPlayer(){
 		//document.querySelector('.player-0-panel').classList.remove('active');
 		//document.querySelector('.player-1-panel').classList.add('active');
 		document.querySelector('.dice').style.display = 'none';
-}
+		document.querySelector('.dice-2').style.display = 'none';
+
+}//end init
